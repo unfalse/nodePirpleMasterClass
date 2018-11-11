@@ -9,7 +9,25 @@ var https = require('https');
 var url = require('url');
 var StringDecoder = require('string_decoder').StringDecoder;
 var fs = require('fs');
+
 var config = require('./config');
+// var _data = require('./lib/data');
+
+
+// TESTING
+// TODO: delete this
+// _data.create('test', 'newFile', {'foo' : 'bar'}, function(err) {
+//     console.log('data.create error: ', err);
+// });
+// _data.read('test', 'newFile1', function(err, data) {
+//     console.log('data.read error: ', err, ' and this was the data: ', data);
+// });
+// _data.update('test', 'newFile', {'fizz' : 'buzz'}, function(err) {
+//     console.log('data.update error: ', err);
+// });
+// _data.delete('test', 'newFile', function(err) {
+//     console.log('data.delete error: ', err);
+// });
 
 // Instantiating the HTTP server
 var httpServer = http.createServer(function(req, res) {

@@ -10,7 +10,9 @@ var url = require('url');
 var StringDecoder = require('string_decoder').StringDecoder;
 var fs = require('fs');
 
-var config = require('./config');
+var config = require('./lib/config');
+var handlers = require('./lib/handlers');
+var helpers = require('./lib/helpers');
 // var _data = require('./lib/data');
 
 
@@ -36,7 +38,7 @@ var httpServer = http.createServer(function(req, res) {
 
 // Start the HTTP server
 httpServer.listen(config.httpPort, function() {
-    console.log('The http server is listening on port ' + config.httpPort);
+    console.log('The HTTP server is listening on port ' + config.httpPort);
 });
 
 // Instantiate the HTTPS server
@@ -50,7 +52,7 @@ var httpsServer = https.createServer(httpsServerOptions, function(req, res) {
 
 // Start the HTTPS server
 httpsServer.listen(config.httpsPort, function() {
-    console.log('The https server is listening on port ' + config.httpsPort);
+    console.log('The HTTPS server is listening on port ' + config.httpsPort);
 });
 
 // All the server logic for both the http and https server
@@ -89,7 +91,7 @@ var unifiedServer = function(req, res) {
             'queryStringObject': queryStringObject,
             'method' : method,
             'headers': headers,
-            'payload' : buffer
+            'payload' : helpers.parseJsonToObject(buffer)
         };
 
         // Route the request to the handler specified in the router
@@ -116,25 +118,17 @@ var unifiedServer = function(req, res) {
                 + ' and with these query string parameters ', 
                 queryStringObject);
 
-            console.log('Request received with these headers: ', headers);
-
-            console.log('Returning this response: ', statusCode, payloadString);
+            // console.log('Request received with these headers: ', headers);
+            // console.log('payload: ', payload);
+            // console.log('Returning this response: ', statusCode, payloadString);
         });        
     });
 };
 
-// Define the handlers
-var handlers = {};
 
-handlers.ping = function(data, callback) {
-    callback(200);
-};
-
-handlers.notFound = function(data, callback) {
-    callback(404);
-};
 
 // Define a request router
 var router = {
-    'ping': handlers.ping
+    'ping': handlers.ping,
+    'users': handlers.users
 };

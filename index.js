@@ -15,6 +15,10 @@ var handlers = require('./lib/handlers');
 var helpers = require('./lib/helpers');
 // var _data = require('./lib/data');
 
+// TESTING
+// helpers.sendTwilioSms('4158375309', 'Hello from Belarus!', function(err){
+//     console.log('Twilio error: ', err);
+// })
 
 // TESTING
 // TODO: delete this
